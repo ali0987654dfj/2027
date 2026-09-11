@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#2563eb">
+  <title>منصة السادس</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <button class="brand" id="homeBtn" aria-label="الرئيسية">
+        <span class="brand-mark">6</span>
+        <span><b>منصة السادس</b><small>منصة تعليمية للطلاب</small></span>
+      </button>
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" title="الوضع الليلي">☾</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div>
+        <span class="eyebrow">السادس العلمي</span>
+        <h1>كل محاضراتك بمكان واحد</h1>
+        <p>اختَر المدرس والمادة، ثم ابدأ المحاضرة مباشرة.</p>
+        <div class="search-wrap">
+          <span>⌕</span>
+          <input id="searchInput" type="search" placeholder="ابحث عن مدرس أو مادة أو محاضرة...">
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-icon">🎓</div>
+        <strong id="teacherCount">0</strong>
+        <span>مدرسين</span>
+      </div>
+    </section>
+
+    <section class="container section" id="teachersSection">
+      <div class="section-head">
+        <div>
+          <h2>المدرسين</h2>
+          <p>اختر مدرسك للوصول إلى محاضراته.</p>
+        </div>
+      </div>
+      <div id="teachersGrid" class="teachers-grid"></div>
+      <div id="emptyTeachers" class="empty hidden">لا توجد نتائج مطابقة.</div>
+    </section>
+  </main>
+
+  <div id="teacherView" class="view hidden">
+    <div class="container">
+      <button class="back-btn" id="backBtn">← رجوع للمدرسين</button>
+      <div id="teacherHeader" class="teacher-header"></div>
+      <div id="classes"></div>
+    </div>
+  </div>
+
+  <div id="playerModal" class="modal hidden">
+    <div class="modal-backdrop" id="modalClose"></div>
+    <div class="player-box">
+      <div class="player-top">
+        <div>
+          <small id="playerTeacher"></small>
+          <h3 id="playerTitle"></h3>
+        </div>
+        <button id="closePlayer" class="close-btn">×</button>
+      </div>
+      <div class="video-area" id="videoArea"></div>
+      <div id="playerDescription" class="player-description"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">منصة السادس © <span id="year"></span></div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="app.js"></script>
+</body>
+</html>
