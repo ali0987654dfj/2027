@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>لوحة تحكم منصة السادس</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>منصة السادس</h1>
+    <p>لوحة التحكم بالمدرسين والمحاضرات</p>
+  </div>
+  <div class="actions">
+    <button id="importBtn">استيراد JSON</button>
+    <button id="saveOnline" class="primary">💾 حفظ أونلاين</button><button id="exportBtn">⬇ تنزيل data.json</button>
+    <input id="fileInput" type="file" accept=".json" hidden>
+  </div>
+</header>
+
+<main>
+  <div class="notice"><b id="status">جارِ الاتصال...</b><br>عدّل البيانات، وسيتم حفظها أونلاين مباشرة عند الحفظ.</div>
+
+  <div class="toolbar">
+    <input id="search" placeholder="ابحث عن مدرس أو مادة...">
+    <button id="addTeacher" class="primary">+ إضافة مدرس</button>
+  </div>
+
+  <section id="teachers"></section>
+</main>
+
+<div id="modal" class="modal hidden">
+  <div class="card">
+    <button id="close" class="close">×</button>
+    <h2 id="mt"></h2>
+    <div id="mb"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
