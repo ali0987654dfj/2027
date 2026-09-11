@@ -1,86 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#2563eb">
-  <title>منصة السادس</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة السادس</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15/dist/hls.min.js"></script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container nav">
-      <button class="brand" id="homeBtn" aria-label="الرئيسية">
-        <span class="brand-mark">6</span>
-        <span><b>منصة السادس</b><small>منصة تعليمية للطلاب</small></span>
-      </button>
-      <div class="nav-actions">
-        <button class="icon-btn" id="themeBtn" title="الوضع الليلي">☾</button>
-      </div>
-    </div>
-  </header>
+<div id="telegramModal" class="modal"><div class="modal-content telegram-box"><div class="modal-header"><i class="fab fa-telegram-plane telegram-icon"></i><h2>انضم إلى قناة التليجرام</h2><p>للحصول على آخر التحديثات والإشعارات المهمة</p></div><button id="confirmSubscription" class="btn btn-success">متابعة</button></div></div>
 
-  <main>
-    <section class="hero container">
-      <div>
-        <span class="eyebrow">السادس العلمي</span>
-        <h1>كل محاضراتك بمكان واحد</h1>
-        <p>اختَر المدرس والمادة، ثم ابدأ المحاضرة مباشرة.</p>
-        <div class="search-wrap">
-          <span>⌕</span>
-          <input id="searchInput" type="search" placeholder="ابحث عن مدرس أو مادة أو محاضرة...">
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-icon">🎓</div>
-        <strong id="teacherCount">0</strong>
-        <span>مدرسين</span>
-      </div>
-    </section>
+<header class="header"><div class="container"><div class="header-content">
+<div class="logo"><span class="logo-mark"><i class="fas fa-graduation-cap"></i></span><div><b>منصة <em>السادس</em></b><small>منصة تعليمية لطلاب السادس الإعدادي</small></div></div>
+<div class="header-controls"><button id="darkModeToggle" class="btn-icon" title="تبديل الوضع"><i class="fas fa-sun"></i></button><button id="backBtn" class="btn btn-secondary" style="display:none"><i class="fas fa-arrow-right"></i> رجوع</button></div>
+</div></div></header>
 
-    <section class="container section" id="teachersSection">
-      <div class="section-head">
-        <div>
-          <h2>المدرسين</h2>
-          <p>اختر مدرسك للوصول إلى محاضراته.</p>
-        </div>
-      </div>
-      <div id="teachersGrid" class="teachers-grid"></div>
-      <div id="emptyTeachers" class="empty hidden">لا توجد نتائج مطابقة.</div>
-    </section>
-  </main>
+<main class="main-content"><div class="container">
+<section id="homePage" class="page active">
+<div class="hero-section premium-hero"><div class="hero-copy"><span class="eyebrow">🎓 كل ما تحتاجه في مكان واحد</span><h1>أهلاً بك في <span>منصة السادس</span></h1><p>محاضرات منظمة، مدرسون مميزون، ومتابعة لتقدمك الدراسي.</p><button class="hero-btn" onclick="navigateToPage('abwab2026')">ابدأ الآن <i class="fas fa-arrow-left"></i></button></div><div class="hero-art"><i class="fas fa-graduation-cap"></i><div class="books">▰<br>▰<br>▰</div></div></div>
+<div class="home-search"><i class="fas fa-search"></i><input id="homeSearch" placeholder="ابحث عن مدرس أو مادة..." oninput="filterHomeTeachers()"></div>
+<div class="section-title"><h2>المواد الدراسية</h2><span>تظهر تلقائيًا حسب المدرسين المضافين</span></div>
+<div id="homeSubjects" class="subjects-strip"></div>
+<div class="section-title"><h2>المدرسون المميزون</h2><button class="text-link" onclick="navigateToPage('abwab2026')">عرض الكل</button></div>
+<div id="homeTeachers" class="home-teachers"></div>
+<div class="continue-card"><div><span>استمر بتعلمك</span><p>تابع آخر محاضراتك واحفظ تقدمك.</p></div><i class="fas fa-play-circle"></i></div>
+</section>
 
-  <div id="teacherView" class="view hidden">
-    <div class="container">
-      <button class="back-btn" id="backBtn">← رجوع للمدرسين</button>
-      <div id="teacherHeader" class="teacher-header"></div>
-      <div id="classes"></div>
-    </div>
-  </div>
+<section id="teachersPage" class="page"><div class="page-header premium-head"><div><span class="eyebrow">قائمة المدرسين</span><h2 id="pageTitle">المدرسون</h2></div><div class="progress-info"><span id="progressText">0% مكتمل</span><div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div></div></div><div id="teachersList" class="teachers-grid"></div></section>
 
-  <div id="playerModal" class="modal hidden">
-    <div class="modal-backdrop" id="modalClose"></div>
-    <div class="player-box">
-      <div class="player-top">
-        <div>
-          <small id="playerTeacher"></small>
-          <h3 id="playerTitle"></h3>
-        </div>
-        <button id="closePlayer" class="close-btn">×</button>
-      </div>
-      <div class="video-area" id="videoArea"></div>
-      <div id="playerDescription" class="player-description"></div>
-    </div>
-  </div>
+<section id="teacherPage" class="page"><div class="teacher-header premium-teacher-header"><div class="teacher-info"><img id="teacherImage" class="teacher-avatar" src="" alt=""><div class="teacher-details"><h2 id="teacherName"></h2><p id="teacherSubject"></p><span class="teacher-tag">الفصل الدراسي</span></div></div><div class="teacher-numbers"><div><b id="teacherLectureCount">0</b><span>محاضرة</span></div><div><b id="teacherClassCount">0</b><span>فصل</span></div></div></div><div id="classesList" class="classes-list"></div></section>
 
-  <footer>
-    <div class="container">منصة السادس © <span id="year"></span></div>
-  </footer>
+<section id="videoPage" class="page"><div class="video-container"><video id="videoPlayerNative" controls playsinline style="display:none;width:100%;height:100%;background:#000"></video><iframe id="videoPlayer" src="" frameborder="0" allowfullscreen></iframe></div><div class="video-info premium-video-info"><span class="eyebrow">المحاضرة</span><h3 id="videoTitle"></h3><p id="videoDescription"></p><button id="markCompleted" class="btn btn-success"><i class="fas fa-check"></i> تم إكمال المحاضرة</button></div></section>
 
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+<section id="materialsPage" class="page"><div class="page-header premium-head"><h2>الملازم والمراجعات</h2></div><div class="materials-tabs"><button class="tab-btn active" data-tab="summaries">الملازم</button><button class="tab-btn" data-tab="ministerials">الوزاريات</button><button class="tab-btn" data-tab="assignments">الواجبات</button><button class="tab-btn" data-tab="focused">المراجعات</button></div><div id="materialsContent" class="materials-content"></div></section>
+<section id="examsPage" class="page"><div class="page-header premium-head"><h2>الامتحانات</h2></div><div id="examsList" class="subjects-grid"></div></section>
+<section id="subjectExamsPage" class="page"><div class="page-header premium-head"><h2 id="subjectName"></h2></div><div id="chaptersExamsList" class="chapters-list"></div></section>
+</div></main>
+
+<nav class="bottom-nav"><button class="nav-item active" onclick="loadHomePage();setActiveNav(this)"><i class="fas fa-home"></i><span>الرئيسية</span></button><button class="nav-item" onclick="navigateToPage('abwab2026');setActiveNav(this)"><i class="fas fa-play-circle"></i><span>المحاضرات</span></button></nav>
+<div id="loadingSpinner" class="loading-spinner"><div class="spinner"></div><p>جاري التحميل...</p></div>
+<script src="dataab2026.js?v=3"></script><script src="app.js"></script>
+</body></html>
