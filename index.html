@@ -2,82 +2,110 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#2563eb">
-  <title>منصة السادس</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="منصة السادس - منصة تعليمية لطلاب السادس العلمي">
+  <title>منصة السادس | منصة تعليمية للطلاب</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+
   <header class="topbar">
     <div class="container nav">
-      <button class="brand" id="homeBtn" aria-label="الرئيسية">
+      <button class="icon-btn" id="themeBtn" aria-label="تغيير المظهر">☾</button>
+      <a class="brand" href="#" onclick="goHome();return false;">
         <span class="brand-mark">6</span>
-        <span><b>منصة السادس</b><small>منصة تعليمية للطلاب</small></span>
-      </button>
-      <div class="nav-actions">
-        <button class="icon-btn" id="themeBtn" title="الوضع الليلي">☾</button>
-      </div>
+        <span>
+          <strong>منصة السادس</strong>
+          <small>منصة تعليمية للطلاب</small>
+        </span>
+      </a>
     </div>
   </header>
 
-  <main>
-    <section class="hero container">
-      <div>
-        <span class="eyebrow">السادس العلمي</span>
-        <h1>كل محاضراتك بمكان واحد</h1>
-        <p>اختَر المدرس والمادة، ثم ابدأ المحاضرة مباشرة.</p>
-        <div class="search-wrap">
+  <main class="container">
+    <section class="hero" id="homeView">
+      <div class="hero-copy">
+        <span class="eyebrow"><i></i> السادس العلمي</span>
+        <h1>دراستك صارت<br><em>أبسط وأسرع.</em></h1>
+        <p>اختَر المدرس والمادة، ووصل لمحاضراتك من مكان واحد بدون تعقيد.</p>
+        <div class="search-box">
           <span>⌕</span>
-          <input id="searchInput" type="search" placeholder="ابحث عن مدرس أو مادة أو محاضرة...">
+          <input id="searchInput" type="search" placeholder="ابحث عن مدرس، مادة أو محاضرة..." autocomplete="off">
+          <kbd>⌘ K</kbd>
         </div>
       </div>
       <div class="hero-card">
-        <div class="hero-icon">🎓</div>
-        <strong id="teacherCount">0</strong>
-        <span>مدرسين</span>
+        <div class="mini-top">
+          <span>لوحة الطالب</span>
+          <span class="live-dot">● مباشر</span>
+        </div>
+        <div class="progress-ring"><span>6</span></div>
+        <strong>كل محاضراتك بمكان واحد</strong>
+        <small>تصفح • شاهد • أكمل دراستك</small>
       </div>
     </section>
 
-    <section class="container section" id="teachersSection">
+    <section class="stats" id="stats"></section>
+
+    <section class="content-section">
       <div class="section-head">
         <div>
+          <span class="section-kicker">اختَر مدرسك</span>
           <h2>المدرسين</h2>
-          <p>اختر مدرسك للوصول إلى محاضراته.</p>
         </div>
+        <div class="filters" id="filters"></div>
       </div>
-      <div id="teachersGrid" class="teachers-grid"></div>
-      <div id="emptyTeachers" class="empty hidden">لا توجد نتائج مطابقة.</div>
+      <div class="teachers-grid" id="teachersGrid"></div>
+      <div class="empty" id="emptyState" hidden>
+        <div>⌕</div>
+        <h3>ما لكينا نتائج</h3>
+        <p>جرّب كلمة بحث ثانية.</p>
+      </div>
+    </section>
+
+    <section class="details" id="detailsView" hidden>
+      <button class="back-btn" onclick="goHome()">← رجوع للمدرسين</button>
+      <div id="teacherDetails"></div>
     </section>
   </main>
 
-  <div id="teacherView" class="view hidden">
-    <div class="container">
-      <button class="back-btn" id="backBtn">← رجوع للمدرسين</button>
-      <div id="teacherHeader" class="teacher-header"></div>
-      <div id="classes"></div>
-    </div>
-  </div>
-
-  <div id="playerModal" class="modal hidden">
-    <div class="modal-backdrop" id="modalClose"></div>
-    <div class="player-box">
-      <div class="player-top">
+  <div class="modal" id="playerModal" hidden>
+    <div class="modal-backdrop" onclick="closePlayer()"></div>
+    <div class="player-sheet">
+      <button class="close-btn" onclick="closePlayer()">×</button>
+      <div class="player-title">
+        <span class="play-badge">▶</span>
         <div>
-          <small id="playerTeacher"></small>
-          <h3 id="playerTitle"></h3>
+          <strong id="playerLectureTitle">المحاضرة</strong>
+          <small id="playerLectureDesc"></small>
         </div>
-        <button id="closePlayer" class="close-btn">×</button>
       </div>
-      <div class="video-area" id="videoArea"></div>
-      <div id="playerDescription" class="player-description"></div>
+      <div class="player-layout">
+        <div class="video-wrap" id="videoWrap"></div>
+        <aside class="playlist-panel">
+          <div class="playlist-head">
+            <strong id="playlistTeacher">قائمة المحاضرات</strong>
+            <span id="playlistCount"></span>
+          </div>
+          <div class="playlist" id="playlist"></div>
+        </aside>
+      </div>
+      <div class="player-controls">
+        <span>سرعة التشغيل</span>
+        <div class="speed-list" id="speedList"></div>
+        <span class="autonext"><i></i> تشغيل المحاضرة التالية تلقائياً</span>
+      </div>
     </div>
   </div>
 
   <footer>
-    <div class="container">منصة السادس © <span id="year"></span></div>
+    <div class="container footer-inner">
+      <strong>منصة السادس</strong>
+      <span>تعلمك بمكان واحد © 2026</span>
+    </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
